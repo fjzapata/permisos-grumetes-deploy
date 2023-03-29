@@ -2,11 +2,13 @@
   "name": "naval-arc-bq",
   "private": true,
   "version": "0.0.0",
+  "homepage": "http://Daniel110702.github.io/Application-Naval",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "node dist/assets/index.html",
+    "predeply": "npm run build",
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview"
   },
   "dependencies": {
