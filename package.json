@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "node dist/assets/index-2a878ec2.js",
+    "start": "node dist/assets/index.html",
     "preview": "vite preview"
   },
   "dependencies": {
