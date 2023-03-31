@@ -37,11 +37,6 @@ export const createRequest = async(
     guardia,
     tiempoDesde,
     hasta,
-  }, {
-    withCredentials: true,
-    headers: {
-        "x-access-token": token
-    }
   });
 };
 
