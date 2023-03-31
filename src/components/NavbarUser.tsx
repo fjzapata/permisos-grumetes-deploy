@@ -98,7 +98,7 @@ export function NavbarUser() {
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  className={({isActive}) => ( isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white')}
+                  className={({isActive}) => ( isActive ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium')}
                 >
                   {item.name}
                 </NavLink>
