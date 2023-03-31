@@ -3,12 +3,14 @@ import { persist } from "zustand/middleware";
 
 type State = {
   token: string;
-  isAuth: boolean
+  isAuth: boolean;
+  username: string;
 };
 
 type Actions = {
   setToken: (token: string) => void;
-  logout: () => void
+  logout: () => void;
+  setUsername: (username: string) => void;
 };
 
 export const useAuthStore = create(
@@ -16,15 +18,23 @@ export const useAuthStore = create(
     (set) => ({
       token: " ",
       isAuth: false,
+      username: "",
       setToken: (token: string) =>
         set((state) => ({
           token,
-          isAuth: true
+          isAuth: true,
         })),
-        logout: () => set(state => ({
-          token: ' ',
-          isAuth: false
-        }))
+      logout: () =>
+        set((state) => ({
+          token: " ",
+          isAuth: false,
+          username: "",
+        })),
+      setUsername: (username: string) => {
+        set((state) => ({
+          username,
+        }));
+      },
     }),
     {
       name: "auth",

@@ -1,11 +1,11 @@
 import { NavbarAdmin } from "../components/NavbarAdmin";
-import { TableroPendiente } from "../components/TableroPendiente";
+import {Outlet} from 'react-router-dom'
 
 export const Dashboard = () => {
   return (
     <>
       <NavbarAdmin />
-      <TableroPendiente />
+      <Outlet/>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import api from "../api/apiConnet";
 import { useAuthStore } from "../store/authStore";
-import { useQuery } from "@tanstack/react-query";
-import { Request } from "./types";
+import {  useQuery } from "@tanstack/react-query";
 
 const token = useAuthStore.getState().token;
 export const fetchRequest = async () => {
@@ -24,7 +23,7 @@ export const createRequest = async(
   grado: string,
   asunto: string,
   guardia: string,
-  desde: string,
+  tiempoDesde: string,
   hasta: string
 ) => {
    return await api.post("api/request", {
@@ -36,7 +35,7 @@ export const createRequest = async(
     grado,
     asunto,
     guardia,
-    desde,
+    tiempoDesde,
     hasta,
   }, {
     withCredentials: true,
@@ -46,6 +45,35 @@ export const createRequest = async(
   });
 };
 
+export const deleteRequest = async(id:string) => {
+  return await api.delete(`api/request/${id}`, {
+    withCredentials: true,
+    headers: {
+      "x-access-token" : token
+    }
+  })
+}
+
+export const aprobarRequest = async(id:string, estado:string) => {
+  const { data } = await api.put(`api/request/${id}`, {
+    estado,
+  },
+  {
+    withCredentials: true,
+    headers: {
+      "x-access-token": token
+    }
+  } 
+  )
+  return data
+}
+
+
+
 export const useFetchRequest = () => {
   return useQuery(["request"], fetchRequest);
 };
+
+export const useDeleteRequest = () => {
+  return useQuery
+}

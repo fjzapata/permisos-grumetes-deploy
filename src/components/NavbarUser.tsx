@@ -3,11 +3,11 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 // import { Link } from "react-router-dom";
 import logo from "../assets/prueba6.png";
 import { useAuthStore } from "../store/authStore";
-import {useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 
 const navigation = [
-  { name: "Realizar peticion", href: "#", current: true },
-  { name: "Peticiones realizadas", href: "#", current: false },
+  { name: "Peticiones realizadas", href: "peticiones-realizadas", },
+  { name: "Realizar peticion", href: "formulario",  },
 ];
 
 function classNames(...classes: string[]) {
@@ -18,6 +18,8 @@ export function NavbarUser() {
 
   const logout = useAuthStore(state => state.logout)
   const navigate = useNavigate()
+
+  // "rounded-md px-3 py-2 text-sm font-medium"
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -52,19 +54,13 @@ export function NavbarUser() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
+                        to={item.href}
+                        className={ ({isActive}) => ( isActive ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium')  }
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -99,20 +95,13 @@ export function NavbarUser() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <NavLink
                   key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
+                  to={item.href}
+                  className={({isActive}) => ( isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white')}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </NavLink>
               ))}
             </div>
           </Disclosure.Panel>

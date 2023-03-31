@@ -2,53 +2,53 @@ import {  aprobarRequest, deleteRequest, useFetchRequest } from "../hooks/useReq
 import Swal from 'sweetalert2'
 
 const tableEmty = [
-  {
-    id: "1",
-    header: "Nombre",
-  },
-  {
-    id: "2",
-    header: "Division",
-  },
-  {
-    id: "3",
-    header: "Grado"
-  },
-  {
-    id: "4",
-    header: "Estado",
-  },
-  {
-    id: "5",
-    header: "Fecha",
-  },
-  {
-    id: "6",
-    header: "Asunto"
-  },
-  {
-    id: "7",
-    header: "Objeto"
-  },
-  {
-    id: '8',
-    header: 'Lugar'
-  },
-  {
-    id: '9',
-    header: "Tiempo desde"
-  },
-  {
-    id: '10',
-    header: 'Hasta'
-  },
-  {
-    id: "11",
-    header: "No. Peticion"
-  },
+    {
+        id: "1",
+        header: "Nombre",
+      },
+      {
+        id: "2",
+        header: "Division",
+      },
+      {
+        id: "3",
+        header: "Grado"
+      },
+      {
+        id: "4",
+        header: "Estado",
+      },
+      {
+        id: "5",
+        header: "Fecha",
+      },
+      {
+        id: "6",
+        header: "Asunto"
+      },
+      {
+        id: "7",
+        header: "Objeto"
+      },
+      {
+        id: '8',
+        header: 'Lugar'
+      },
+      {
+        id: '9',
+        header: "Tiempo desde"
+      },
+      {
+        id: '10',
+        header: 'Hasta'
+      },
+      {
+        id: "11",
+        header: "No. Peticion"
+      },
 ];
 
-export const TableroPendiente = () => {
+export const TableroAprobado = () => {
 
   const {data, isLoading, isError, error} = useFetchRequest()
 
@@ -79,10 +79,10 @@ export const TableroPendiente = () => {
     }
   };
 
-  const filtro = data?.filter((request: any) => request.estado === 'Pendiente')
+  const filtro = data?.filter((request: any) => request.estado === 'Aprobado')
 
   return (
-    <section className="container mx-auto p-5 font-mono">
+    <section className="container mx-auto p-6 font-mono">
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div className="w-full overflow-x-auto">
           <table className="w-full">
@@ -128,39 +128,8 @@ export const TableroPendiente = () => {
                   <td className="px-4 py-3 text-sm border">{request.hasta}</td>
                   <td className="px-4 py-3 text-sm border">{request._id}</td>
                   <td className="px-4 py-3 text-sm border">
-                    <button className="mx-3 hover:text-green-500" onClick={() => {aprobarRequest(request._id, 'Aprobado')}}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </button>
-                    <button className="mx-3 hover:text-yellow-600" onClick={() => {aprobarRequest(request._id, 'Denegado')}}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </button>
-                    <button className="mx-3 hover:text-red-500" onClick={() => {
+                    <button className="mx-3 hover:text-red-500" onClick={
+                      () => {
                         Swal.fire({
                           title: '¿Estás seguro?',
                           text: " No podrás revertir esto.!",
@@ -182,7 +151,7 @@ export const TableroPendiente = () => {
                         })
                       
                     }
-                      }>
+                    }>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

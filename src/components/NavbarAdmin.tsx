@@ -1,14 +1,14 @@
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/prueba6.png";
 import { useAuthStore } from "../store/authStore";
 
 const navigation = [
-  { name: "Pendientes", href: "#", current: true },
-  { name: "Aprobadas", href: "#", current: false },
-  { name: "Denegadas", href: "#", current: false },
-  { name: "Encontrar peticion", href: "#", current: false },
+  { name: "Pendientes", href: "pendiente" },
+  { name: "Aprobadas", href: "aprobado" },
+  { name: "Denegadas", href: "denegado" },
+  { name: "Encontrar peticion", href: "search" },
 ];
 
 function classNames(...classes: string[]) {
@@ -24,7 +24,7 @@ export function NavbarAdmin() {
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className=" mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -37,8 +37,8 @@ export function NavbarAdmin() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
+              <div className=" flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center ">
                   <img
                     className="block h-8 w-auto lg:hidden"
                     src={logo}
@@ -49,24 +49,22 @@ export function NavbarAdmin() {
                     src={logo}
                     alt="Your Company"
                   />
+                  {/*  */}
+                 
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
+                    {
+                     navigation.map((item) => (
+                      <NavLink
+                       key={item.name}
+                       to={item.href}
+                       className={({isActive}) => ( isActive ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium')}
                       >
                         {item.name}
-                      </a>
-                    ))}
+                      </NavLink>
+                     ))
+                    }
                   </div>
                 </div>
               </div>
@@ -101,20 +99,13 @@ export function NavbarAdmin() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <NavLink
                   key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
+                  to={item.href}
+                  className={({isActive}) => ( isActive ? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium')}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </NavLink>
               ))}
             </div>
           </Disclosure.Panel>

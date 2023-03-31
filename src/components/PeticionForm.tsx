@@ -1,8 +1,25 @@
-import {useMutation} from '@tanstack/react-query'
 import {createRequest} from '../hooks/useRequest'
+import Swal from 'sweetalert2'
+import { useAuthStore } from '../store/authStore'
+
+
 export const PeticionForm = () => {
 
+  const initialStateValues = {
+    departamento: '',
+    division: '',
+    lugar: '',
+    objeto: '',
+    grado: '',
+    asunto: '',
+    guardia: '',
+  }
 
+
+
+  
+
+  const username = useAuthStore(state => state.username)
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 
@@ -15,15 +32,50 @@ export const PeticionForm = () => {
     const grado = (e.currentTarget.elements[5] as HTMLInputElement).value
     const asunto = (e.currentTarget.elements[6] as HTMLInputElement).value
     const guardia = (e.currentTarget.elements[7] as HTMLInputElement).value
-    const desde = (e.currentTarget.elements[8] as HTMLInputElement).value
+    const tiempoDesde = (e.currentTarget.elements[8] as HTMLInputElement).value
     const hasta = (e.currentTarget.elements[9] as HTMLInputElement).value
-    console.log(nombre, departamento, division, lugar,objeto, asunto,
-      guardia, desde, hasta)
 
-      const resFormRequest = await createRequest(nombre, departamento, division, lugar,objeto,grado, asunto,
-        guardia,  desde, hasta) 
+      try {
+        const resFormRequest = await createRequest(nombre, departamento, division, lugar,objeto,grado, asunto,
+          guardia,  tiempoDesde, hasta) 
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Peticion creada con exito'
+          })
 
-        console.log(resFormRequest)
+      } catch (error:any) {
+        if (error.response) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+        }
+      }
+
   }
 
   return (
@@ -42,6 +94,8 @@ export const PeticionForm = () => {
                   required
                   name="name"
                   id="name"
+                  disabled
+                  value={username}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-4"
                 />
               </div>

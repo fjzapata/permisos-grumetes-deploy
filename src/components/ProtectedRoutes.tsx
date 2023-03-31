@@ -8,3 +8,9 @@ export const ProtectedRoutes = ({ isAllowed }: Props) => {
 
   return <Outlet />;
 };
+
+export const ProtectedRoutesAdmin = ({ isAllowed }: Props) => {
+  if (!isAllowed) return <Navigate to="/login-admin" />;
+
+  return <Outlet />;
+};

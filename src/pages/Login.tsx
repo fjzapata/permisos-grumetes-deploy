@@ -1,41 +1,84 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/prueba6.png";
-import { loginRequest } from '../api/auth'
-import {useAuthStore} from '../store/authStore'
-
+import { loginRequest } from "../api/auth";
+import { useAuthStore } from "../store/authStore";
+import Swal from "sweetalert2";
+import '../App.css'
 
 export const Login = () => {
+  const setToken = useAuthStore((state) => state.setToken);
+  const setUsername = useAuthStore((state) => state.setUsername);
+  const navigate = useNavigate();
 
-  const setToken = useAuthStore(state => state.setToken)
-  const logout = useAuthStore(state => state.logout)
-  const navigate = useNavigate()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const cedula = (e.currentTarget.elements[0] as HTMLInputElement)
+      .valueAsNumber;
+    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const cedula = (e.currentTarget.elements[0] as HTMLInputElement).valueAsNumber
-    const password = (e.currentTarget.elements[1] as HTMLInputElement).value
+    try {
+      const resLogin = await loginRequest(cedula, password);
 
-    const resLogin = await loginRequest(cedula, password)
-    setToken(resLogin.data.token)
+      if (resLogin.data.response.username == "admin") {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
-    navigate('/permisos')
+        Toast.fire({
+          icon: "error",
+          title: "Admin no permitido",
+        });
+      } else {
+        setToken(resLogin.data.token);
+        setUsername(resLogin.data.response.username);
 
-    setTimeout(() => {
-      logout()
-      navigate('/login')
-    }, 1800000)
+        navigate("/permisos");
+      }
+    } catch (error: any) {
+      if (error.response) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "bottom",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "error",
+          title: error.response.data.message,
+        });
+      }
+    }
 
     // const resProfile = await listRequest()
     // console.log(resProfile)
-    
-  }
+  };
 
   return (
     <div className="flex min-h-full items-center mt-8 justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <img className="mx-auto h-12 w-auto" src={logo} alt="Your Company" />
+          <Link to="/">
+            <img
+              className="mx-auto h-12 w-auto"
+              src={logo}
+              alt="Your Company"
+            />
+          </Link>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Ingresa en tu cuenta
           </h2>
