@@ -1,5 +1,9 @@
 import { useState } from "react";
-import {  aprobarRequest, deleteRequest, useFetchRequest } from "../hooks/useRequest";
+import {
+  aprobarRequest,
+  deleteRequest,
+  useFetchRequest,
+} from "../hooks/useRequest";
 
 const tableEmty = [
   {
@@ -8,55 +12,57 @@ const tableEmty = [
   },
   {
     id: "2",
-    header: "Division",
+    header: "Departamento",
   },
   {
     id: "3",
-    header: "Grado"
+    header: "Division",
   },
   {
     id: "4",
-    header: "Estado",
+    header: "Grado",
   },
   {
     id: "5",
-    header: "Fecha",
+    header: "Estado",
   },
   {
     id: "6",
-    header: "Asunto"
+    header: "Fecha",
   },
   {
     id: "7",
-    header: "Objeto"
+    header: "Asunto",
   },
   {
-    id: '8',
-    header: 'Lugar'
+    id: "8",
+    header: "Objeto",
   },
   {
-    id: '9',
-    header: "Tiempo desde"
+    id: "9",
+    header: "Lugar",
   },
   {
-    id: '10',
-    header: 'Hasta'
+    id: "10",
+    header: "Tiempo desde",
   },
   {
     id: "11",
-    header: "No. Peticion"
+    header: "Hasta",
+  },
+  {
+    id: "12",
+    header: "No. Peticion",
   },
 ];
 
 export const SearchUser = () => {
+  const { data, isLoading, isError, error } = useFetchRequest();
 
-  const {data, isLoading, isError, error} = useFetchRequest()
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
+  console.log(error);
 
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error</div>
-  console.log(error) 
-
- 
   const levelBadge = (state: string) => {
     if (state === "Aprobado") {
       return (
@@ -79,41 +85,52 @@ export const SearchUser = () => {
     }
   };
 
-  const [search, setSearch] = useState()
+  const [search, setSearch] = useState();
 
-  const handleSearch = (e:any) => {
-    setSearch(e.target.value)
-  }
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value);
+  };
 
-  let result = []
+  let result = [];
   if (!search) {
-    result = data
+    result = data;
   } else {
-    result = data.filter((dato:any) =>
-        dato.nombre.includes(search)
-    )
+    result = data.filter((dato: any) => dato.nombre.includes(search));
   }
-  
-
 
   return (
     <section className=" container mx-auto p-5 font-mono">
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
         <div className="w-full overflow-x-auto">
           <div className="p-4">
-            <label htmlFor="table-search" className="sr-only">Buscar</label>
+            <label htmlFor="table-search" className="sr-only">
+              Buscar
+            </label>
             <div className="relative mt-1">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-						xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd"
-							d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-							clip-rule="evenodd"></path>
-					</svg>
-                </div>
-                <input value={search} onChange={handleSearch} type="text" id="table-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar peticion" />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                value={search}
+                onChange={handleSearch}
+                type="text"
+                id="table-search"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Buscar peticion"
+              />
             </div>
-          </div>  
+          </div>
           <table className="w-full">
             <thead>
               <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
@@ -140,6 +157,9 @@ export const SearchUser = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
+                    {request.departamento}
+                  </td>
+                  <td className="px-4 py-3 text-ms font-semibold border">
                     {request.division}
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
@@ -148,15 +168,18 @@ export const SearchUser = () => {
                   <td className="px-4 py-3 text-xs border">
                     {levelBadge(request.estado)}
                   </td>
-                  <td className="px-4 py-3 text-sm border">{request.createdAt}</td>
+                  <td className="px-4 py-3 text-sm border">
+                    {request.createdAt}
+                  </td>
                   <td className="px-4 py-3 text-sm border">{request.asunto}</td>
                   <td className="px-4 py-3 text-sm border">{request.objeto}</td>
                   <td className="px-4 py-3 text-sm border">{request.lugar}</td>
-                  <td className="px-4 py-3 text-sm border">{request.tiempoDesde}</td>
+                  <td className="px-4 py-3 text-sm border">
+                    {request.tiempoDesde}
+                  </td>
                   <td className="px-4 py-3 text-sm border">{request.hasta}</td>
                   <td className="px-4 py-3 text-sm border">{request._id}</td>
-                  <td className="px-4 py-3 text-sm border">
-                  </td>
+                  <td className="px-4 py-3 text-sm border"></td>
                 </tr>
               ))}
             </tbody>
@@ -166,4 +189,3 @@ export const SearchUser = () => {
     </section>
   );
 };
-

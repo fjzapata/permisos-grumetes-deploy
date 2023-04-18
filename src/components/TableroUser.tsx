@@ -1,63 +1,65 @@
 import { deleteRequest, useFetchRequest } from "../hooks/useRequest";
-import {useAuthStore} from '../store/authStore'
-import Swal from 'sweetalert2'
+import { useAuthStore } from "../store/authStore";
+import Swal from "sweetalert2";
 
 const tableEmty = [
-    {
-        id: "1",
-        header: "Nombre",
-      },
-      {
-        id: "2",
-        header: "Division",
-      },
-      {
-        id: "3",
-        header: "Grado"
-      },
-      {
-        id: "4",
-        header: "Estado",
-      },
-      {
-        id: "5",
-        header: "Fecha",
-      },
-      {
-        id: "6",
-        header: "Asunto"
-      },
-      {
-        id: "7",
-        header: "Objeto"
-      },
-      {
-        id: '8',
-        header: 'Lugar'
-      },
-      {
-        id: '9',
-        header: "Tiempo desde"
-      },
-      {
-        id: '10',
-        header: 'Hasta'
-      },
-      {
-        id: "11",
-        header: "No. Peticion"
-      },
+  {
+    id: "1",
+    header: "Nombre",
+  },
+  {
+    id: "2",
+    header: "Departamento",
+  },
+  {
+    id: "3",
+    header: "Division",
+  },
+  {
+    id: "4",
+    header: "Grado",
+  },
+  {
+    id: "5",
+    header: "Estado",
+  },
+  {
+    id: "6",
+    header: "Fecha",
+  },
+  {
+    id: "7",
+    header: "Asunto",
+  },
+  {
+    id: "8",
+    header: "Objeto",
+  },
+  {
+    id: "9",
+    header: "Lugar",
+  },
+  {
+    id: "10",
+    header: "Tiempo desde",
+  },
+  {
+    id: "11",
+    header: "Hasta",
+  },
+  {
+    id: "12",
+    header: "No. Peticion",
+  },
 ];
 
 export const TableroUser = () => {
+  const { data, isLoading, isError, error } = useFetchRequest();
 
-  const {data, isLoading, isError, error} = useFetchRequest()
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>error..</div>;
+  console.log(error);
 
-  if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>error..</div>
-  console.log(error)
-
- 
   const levelBadge = (state: string) => {
     if (state === "Aprobado") {
       return (
@@ -80,9 +82,9 @@ export const TableroUser = () => {
     }
   };
 
-  const username = useAuthStore.getState().username
+  const username = useAuthStore.getState().username;
 
-  const filtro = data?.filter((request: any) => request.nombre === username)
+  const filtro = data?.filter((request: any) => request.nombre === username);
 
   return (
     <section className="container mx-auto p-6 font-mono">
@@ -115,6 +117,9 @@ export const TableroUser = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
+                    {request.departamento}
+                  </td>
+                  <td className="px-4 py-3 text-ms font-semibold border">
                     {request.division}
                   </td>
                   <td className="px-4 py-3 text-sm border">{request.grado}</td>
@@ -122,39 +127,42 @@ export const TableroUser = () => {
                   <td className="px-4 py-3 text-xs border">
                     {levelBadge(request.estado)}
                   </td>
-                  <td className="px-4 py-3 text-sm border">{request.createdAt}</td>
+                  <td className="px-4 py-3 text-sm border">
+                    {request.createdAt}
+                  </td>
                   <td className="px-4 py-3 text-sm border">{request.asunto}</td>
                   <td className="px-4 py-3 text-sm border">{request.objeto}</td>
                   <td className="px-4 py-3 text-sm border">{request.lugar}</td>
-                  <td className="px-4 py-3 text-sm border">{request.tiempoDesde}</td>
+                  <td className="px-4 py-3 text-sm border">
+                    {request.tiempoDesde}
+                  </td>
                   <td className="px-4 py-3 text-sm border">{request.hasta}</td>
                   <td className="px-4 py-3 text-sm border">{request._id}</td>
                   <td className="px-4 py-3 text-sm border">
-                   
-                    <button className="mx-3 hover:text-red-500" onClick={
-                      () => {
+                    <button
+                      className="mx-3 hover:text-red-500"
+                      onClick={() => {
                         Swal.fire({
-                          title: '¿Estás seguro?',
+                          title: "¿Estás seguro?",
                           text: " No podrás revertir esto.!",
-                          icon: 'warning',
+                          icon: "warning",
                           showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Eliminar',
-                          cancelButtonText: 'Cancelar'
-                        }).then((result:any) => {
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Eliminar",
+                          cancelButtonText: "Cancelar",
+                        }).then((result: any) => {
                           if (result.isConfirmed) {
-                            deleteRequest(request._id)
+                            deleteRequest(request._id);
                             Swal.fire(
-                              'Eliminado',
-                              'La petición ha sido eliminada',
-                              'success'
-                            )
+                              "Eliminado",
+                              "La petición ha sido eliminada",
+                              "success"
+                            );
                           }
-                        })
-                      
-                    }
-                    }>
+                        });
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
