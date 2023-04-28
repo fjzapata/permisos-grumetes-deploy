@@ -1,8 +1,8 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { useAuthStore } from "../store/authStore";
+import axios from "axios";
+
 
 const api = axios.create({
-  baseURL: "https://node-deployment-production.up.railway.app/",
+  baseURL: "http://localhost:3000/",
   withCredentials: true
 });
 

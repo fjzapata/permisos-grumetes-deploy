@@ -57,7 +57,8 @@ const tableEmty = [
 ];
 
 export const TableroAprobado = () => {
-  const { data, isLoading, isError, error } = useFetchRequest();
+const { data, isLoading, isError, error } = useFetchRequest();
+
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;

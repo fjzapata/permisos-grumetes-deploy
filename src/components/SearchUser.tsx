@@ -1,7 +1,5 @@
 import { useState } from "react";
 import {
-  aprobarRequest,
-  deleteRequest,
   useFetchRequest,
 } from "../hooks/useRequest";
 

@@ -55,6 +55,7 @@ const tableEmty = [
 
 export const TableroUser = () => {
   const { data, isLoading, isError, error } = useFetchRequest();
+  console.log(data)
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>error..</div>;
@@ -64,19 +65,20 @@ export const TableroUser = () => {
     if (state === "Aprobado") {
       return (
         <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-          Aprobado
+           Aprobado
         </span>
       );
-    } else if (state === "Pendiente") {
+    } else if (state === "Denegado") {
       return (
-        <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
-          Pendiente
+        
+        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+          Denegado
         </span>
       );
     } else {
       return (
-        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-          Denegado
+        <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+         Pendiente
         </span>
       );
     }

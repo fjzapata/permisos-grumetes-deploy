@@ -4,6 +4,7 @@ import {
   useFetchRequest,
 } from "../hooks/useRequest";
 import Swal from "sweetalert2";
+import { useAuthStore } from "../store/authStore";
 
 const tableEmty = [
   {
@@ -62,30 +63,71 @@ export const TableroPendiente = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
   console.log(error);
+  const username = useAuthStore.getState().username;
+  
+  let resultState: string;
 
+  if (username === 'admin') {
+    resultState = "Aprobacion 1"
+  } else if (username === 'admin2') {
+    resultState = "Aprobacion 2"
+  } else if (username === 'admin3') {
+    resultState = "Aprobacion 3"
+  }else if (username === 'admin4') {
+    resultState = "Aprobacion 4"
+  }else if (username === 'admin5') {
+    resultState = "Aprobacion 5"
+  }else if (username === 'admin6') {
+    resultState = "Aprobado"
+  }
+  let stateAdmin: string;
+
+  if (username === 'admin') {
+    stateAdmin = 'Pendiente'
+  } else if (username === 'admin2') {
+    stateAdmin = 'Aprobacion 1'
+  } else if (username === 'admin3') {
+    stateAdmin = 'Aprobacion 2'
+  } else if (username === 'admin4') {
+    stateAdmin = 'Aprobacion 3'
+  } else if (username === 'admin5') {
+    stateAdmin = 'Aprobacion 4'
+  } else if (username === 'admin6') {
+    stateAdmin = 'Aprobacion 5'
+  }
   const levelBadge = (state: string) => {
     if (state === "Aprobado") {
       return (
         <span className="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
-          Aprobado
+           Aprobado
         </span>
       );
-    } else if (state === "Pendiente") {
+    } else if (state === "Denegado") {
       return (
-        <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
-          Pendiente
+        
+        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+          Denegado
         </span>
       );
     } else {
       return (
-        <span className="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-          Denegado
+        <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+         {stateAdmin}
         </span>
       );
     }
   };
 
-  const filtro = data?.filter((request: any) => request.estado === "Pendiente");
+  
+  console.log(username)
+
+
+
+
+
+  const filtro = data?.filter((request: any) => request.estado === stateAdmin);
+
+  
 
   return (
     <section className="container mx-auto p-5 font-mono">
@@ -144,7 +186,7 @@ export const TableroPendiente = () => {
                     <button
                       className="mx-3 hover:text-green-500"
                       onClick={() => {
-                        aprobarRequest(request._id, "Aprobado");
+                        aprobarRequest(request._id, resultState);
                       }}
                     >
                       <svg
@@ -165,7 +207,7 @@ export const TableroPendiente = () => {
                     <button
                       className="mx-3 hover:text-yellow-600"
                       onClick={() => {
-                        aprobarRequest(request._id, "Denegado");
+                        aprobarRequest(request._id, 'Denegado');
                       }}
                     >
                       <svg

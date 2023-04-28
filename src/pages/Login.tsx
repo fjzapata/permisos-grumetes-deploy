@@ -5,10 +5,12 @@ import { loginRequest } from "../api/auth";
 import { useAuthStore } from "../store/authStore";
 import Swal from "sweetalert2";
 import '../App.css'
+import { RenderStrategy } from "@headlessui/react/dist/utils/render";
 
 export const Login = () => {
   const setToken = useAuthStore((state) => state.setToken);
   const setUsername = useAuthStore((state) => state.setUsername);
+  const setRole = useAuthStore((state) => state.setRole )
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +22,7 @@ export const Login = () => {
     try {
       const resLogin = await loginRequest(cedula, password);
 
-      if (resLogin.data.response.username == "admin") {
+      if (resLogin.data.response.idUser == "644abb4bb0742dce3395596f") {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom",
@@ -40,6 +42,7 @@ export const Login = () => {
       } else {
         setToken(resLogin.data.token);
         setUsername(resLogin.data.response.username);
+        setRole(resLogin.data.response.idUser);
 
         navigate("/permisos");
       }

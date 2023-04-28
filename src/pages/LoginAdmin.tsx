@@ -8,9 +8,9 @@ import '../App.css'
 
 export const LoginAdmin = () => {
   const setToken = useAuthStore((state) => state.setToken);
-  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const setUsername = useAuthStore((state) => state.setUsername);
+  const setRole = useAuthStore((state) => state.setRole )
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export const LoginAdmin = () => {
     try {
       const resLogin = await loginRequest(cedula, password);
 
-      if (resLogin.data.response.username != "admin") {
+      if (resLogin.data.response.idUser == "644abb4bb0742dce3395596e") {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom",
@@ -41,14 +41,10 @@ export const LoginAdmin = () => {
       } else {
         setToken(resLogin.data.token);
         setUsername(resLogin.data.response.username);
+        setRole(resLogin.data.response.idUser);
         console.log(resLogin);
 
         navigate("/dashboard");
-
-        setTimeout(() => {
-          logout();
-          navigate("/login-admin");
-        }, 1800000);
       }
     } catch (error: any) {
       if (error.response) {
