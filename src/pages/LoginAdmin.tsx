@@ -21,7 +21,7 @@ export const LoginAdmin = () => {
     try {
       const resLogin = await loginRequest(cedula, password);
 
-      if (resLogin.data.response.idUser == "644abb4bb0742dce3395596e") {
+      if (resLogin.data.response.idUser == "644bb91feff1cda3d5f1fc68") {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom",
