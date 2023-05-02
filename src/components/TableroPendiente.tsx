@@ -69,7 +69,7 @@ export const TableroPendiente = () => {
 
   if (username === 'admin') {
     resultState = "Aprobacion 1"
-  } else if (username === 'admin2') {
+  } else if (username === 'admin22') {
     resultState = "Aprobacion 2"
   } else if (username === 'admin3') {
     resultState = "Aprobacion 3"
@@ -84,7 +84,7 @@ export const TableroPendiente = () => {
 
   if (username === 'admin') {
     stateAdmin = 'Pendiente'
-  } else if (username === 'admin2') {
+  } else if (username === 'admin22') {
     stateAdmin = 'Aprobacion 1'
   } else if (username === 'admin3') {
     stateAdmin = 'Aprobacion 2'
