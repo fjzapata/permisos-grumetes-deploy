@@ -29,7 +29,7 @@ export function CreateAdmin() {
       });
 
       Toast.fire({
-        icon: "error",
+        icon: "success",
         title: 'Admin creado con exito'
       });
       
