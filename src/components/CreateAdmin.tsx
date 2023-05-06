@@ -1,16 +1,10 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/prueba6.png";
-import { registerRequest } from "../api/auth";
-import { useAuthStore } from "../store/authStore";
-import Swal from "sweetalert2";
-import '../App.css'
 
-export const Register = () => {
-  const setToken = useAuthStore((state) => state.setToken);
-  const setUsername = useAuthStore((state) => state.setUsername);
-  const setRole = useAuthStore((state) => state.setRole )
-  const navigate = useNavigate();
+import { registerAdmin } from "../api/auth";
+import Swal from "sweetalert2";
+import "../App.css";
+
+export function CreateAdmin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,11 +14,25 @@ export const Register = () => {
     const password = (e.currentTarget.elements[2] as HTMLInputElement).value;
 
     try {
-      const resRegister = await registerRequest(username, cedula, password);
-      setToken(resRegister.data.token);
-      setUsername(resRegister.data.response.username)
-      setRole(resRegister.data.response.idUser)
-      navigate("/permisos");
+      const resRegister = await registerAdmin(username, cedula, password);
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "error",
+        title: 'Admin creado con exito'
+      });
+      
     } catch (error: any) {
       if (error.response) {
         const Toast = Swal.mixin({
@@ -51,15 +59,8 @@ export const Register = () => {
     <div className="flex min-h-full items-center mt-8 justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
-          <Link to="/">
-            <img
-              className="mx-auto h-12 w-auto"
-              src={logo}
-              alt="Your Company"
-            />
-          </Link>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Crea una cuenta
+            Crear cuenta de administrador
           </h2>
 
           <form className="mt-8 space-y-6 mb-5" onSubmit={handleSubmit}>
@@ -121,17 +122,8 @@ export const Register = () => {
               </button>
             </div>
           </form>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            O{" "}
-            <Link
-              to="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500 my-4"
-            >
-              ¿Ya tienes una Cuenta?
-            </Link>
-          </p>
         </div>
       </div>
     </div>
   );
-};
+}

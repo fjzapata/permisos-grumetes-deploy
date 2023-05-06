@@ -9,6 +9,7 @@ const navigation = [
   { name: "Aprobadas", href: "aprobado" },
   { name: "Denegadas", href: "denegado" },
   { name: "Encontrar peticion", href: "search" },
+  { name: "Crear admin", href: "crear-admin"}
 ];
 
 function classNames(...classes: string[]) {

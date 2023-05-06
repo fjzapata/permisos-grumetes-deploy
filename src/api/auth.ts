@@ -15,3 +15,12 @@ export const registerRequest = async (username: string, cedula: number, password
     })
 }
 
+export const registerAdmin = async (username: string, cedula: number, password: string) => {
+    return await api.post('/api/auth/signup', {
+        username,
+        cedula,
+        password,
+        roles: 'admin'
+    })
+}
+

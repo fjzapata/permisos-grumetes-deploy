@@ -65,36 +65,7 @@ export const TableroPendiente = () => {
   console.log(error);
   const username = useAuthStore.getState().username;
   
-  let resultState: string;
-
-  if (username === 'admin') {
-    resultState = "Aprobacion 1"
-  } else if (username === 'admin22') {
-    resultState = "Aprobacion 2"
-  } else if (username === 'admin3') {
-    resultState = "Aprobacion 3"
-  }else if (username === 'admin4') {
-    resultState = "Aprobacion 4"
-  }else if (username === 'admin5') {
-    resultState = "Aprobacion 5"
-  }else if (username === 'admin6') {
-    resultState = "Aprobado"
-  }
-  let stateAdmin: string;
-
-  if (username === 'admin') {
-    stateAdmin = 'Pendiente'
-  } else if (username === 'admin22') {
-    stateAdmin = 'Aprobacion 1'
-  } else if (username === 'admin3') {
-    stateAdmin = 'Aprobacion 2'
-  } else if (username === 'admin4') {
-    stateAdmin = 'Aprobacion 3'
-  } else if (username === 'admin5') {
-    stateAdmin = 'Aprobacion 4'
-  } else if (username === 'admin6') {
-    stateAdmin = 'Aprobacion 5'
-  }
+ 
   const levelBadge = (state: string) => {
     if (state === "Aprobado") {
       return (
@@ -112,20 +83,13 @@ export const TableroPendiente = () => {
     } else {
       return (
         <span className="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
-         {stateAdmin}
+         'Pendiente'
         </span>
       );
     }
   };
 
-  
-  console.log(username)
-
-
-
-
-
-  const filtro = data?.filter((request: any) => request.estado === stateAdmin);
+  const filtro = data?.filter((request: any) => request.estado === 'Pendiente');
 
   
 
@@ -186,7 +150,7 @@ export const TableroPendiente = () => {
                     <button
                       className="mx-3 hover:text-green-500"
                       onClick={() => {
-                        aprobarRequest(request._id, resultState);
+                        aprobarRequest(request._id, 'Aprobado');
                       }}
                     >
                       <svg

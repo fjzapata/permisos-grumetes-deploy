@@ -18,6 +18,7 @@ import { SearchUser } from "./components/SearchUser";
 import { PeticionForm } from "./components/PeticionForm";
 import { TableroUser } from "./components/TableroUser";
 import { InicioDashboar } from "./components/InicioDashboar";
+import { CreateAdmin } from "./components/CreateAdmin";
 
 function App() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -44,6 +45,7 @@ function App() {
             <Route path="aprobado" element={<TableroAprobado />} />
             <Route path="denegado" element={<TableroDenegado />} />
             <Route path="search" element={<SearchUser />} />
+            <Route path="crear-admin" element={<CreateAdmin/>} />
             <Route path="" element={<InicioDashboar />} />
           </Route>
         </Route>
