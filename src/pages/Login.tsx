@@ -9,8 +9,9 @@ import { RenderStrategy } from "@headlessui/react/dist/utils/render";
 
 export const Login = () => {
   const setToken = useAuthStore((state) => state.setToken);
+  const setUserId = useAuthStore((state) => state.setUserId);
   const setUsername = useAuthStore((state) => state.setUsername);
-  const setRole = useAuthStore((state) => state.setRole )
+  const setRole = useAuthStore((state) => state.setRole)
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,9 +21,9 @@ export const Login = () => {
     const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
 
     try {
-      const resLogin = await loginRequest(cedula, password);
+      const { data } = await loginRequest(cedula, password);
 
-      if (resLogin.data.response.idUser == "644bb91feff1cda3d5f1fc69") {
+      if (data.response.idUser == "644bb91feff1cda3d5f1fc69") {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom",
@@ -40,9 +41,10 @@ export const Login = () => {
           title: "Admin no permitido",
         });
       } else {
-        setToken(resLogin.data.token);
-        setUsername(resLogin.data.response.username);
-        setRole(resLogin.data.response.idUser);
+        setToken(data.token);
+        setUsername(data.response.username);
+        setUserId(data.response.id);
+        setRole(data.response.idUser);
 
         navigate("/permisos");
       }

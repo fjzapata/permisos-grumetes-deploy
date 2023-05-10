@@ -10,7 +10,8 @@ export const LoginAdmin = () => {
   const setToken = useAuthStore((state) => state.setToken);
   const navigate = useNavigate();
   const setUsername = useAuthStore((state) => state.setUsername);
-  const setRole = useAuthStore((state) => state.setRole )
+  const setUserId = useAuthStore((state) => state.setUserId);
+  const setRole = useAuthStore((state) => state.setRole)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,9 +20,9 @@ export const LoginAdmin = () => {
     const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
 
     try {
-      const resLogin = await loginRequest(cedula, password);
+      const { data } = await loginRequest(cedula, password);
 
-      if (resLogin.data.response.idUser == "644bb91feff1cda3d5f1fc68") {
+      if (data.response.idUser == "644bb91feff1cda3d5f1fc68") {
         const Toast = Swal.mixin({
           toast: true,
           position: "bottom",
@@ -39,10 +40,11 @@ export const LoginAdmin = () => {
           title: "Este usuario no posee permiso",
         });
       } else {
-        setToken(resLogin.data.token);
-        setUsername(resLogin.data.response.username);
-        setRole(resLogin.data.response.idUser);
-        console.log(resLogin);
+        setToken(data.token);
+        setUsername(data.response.username);
+        setUserId(data.response.id);
+        setRole(data.response.idUser);
+        console.log(data);
 
         navigate("/dashboard");
       }

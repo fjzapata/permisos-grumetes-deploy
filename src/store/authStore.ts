@@ -6,12 +6,14 @@ type State = {
   isAuth: boolean;
   username: string;
   idUser: string;
+  id: string;
 };
 
 type Actions = {
   setToken: (token: string) => void;
   logout: () => void;
   setUsername: (username: string) => void;
+  setUserId: (id: string) => void;
   setRole: (idUser: string) => void;
 };
 
@@ -22,6 +24,7 @@ export const useAuthStore = create(
       isAuth: false,
       username: "",
       idUser: "",
+      id: "",
       setToken: (token: string) =>
         set((state) => ({
           token,
@@ -29,6 +32,7 @@ export const useAuthStore = create(
         })),
       logout: () =>
         set((state) => ({
+          id: '',
           token: " ",
           isAuth: false,
           username: "",
@@ -37,6 +41,10 @@ export const useAuthStore = create(
       setUsername: (username: string) =>
         set((state) => ({
           username,
+        })),
+      setUserId: (id: string) =>
+        set((state) => ({
+          id
         })),
       setRole: (idUser: string) =>
         set((state) => ({

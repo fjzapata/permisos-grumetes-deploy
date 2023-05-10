@@ -9,7 +9,8 @@ import '../App.css'
 export const Register = () => {
   const setToken = useAuthStore((state) => state.setToken);
   const setUsername = useAuthStore((state) => state.setUsername);
-  const setRole = useAuthStore((state) => state.setRole )
+  const setUserId = useAuthStore((state) => state.setUserId);
+  const setRole = useAuthStore((state) => state.setRole)
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,6 +25,7 @@ export const Register = () => {
       setToken(resRegister.data.token);
       setUsername(resRegister.data.response.username)
       setRole(resRegister.data.response.idUser)
+      setUserId(resRegister.data.response.id);
       navigate("/permisos");
     } catch (error: any) {
       if (error.response) {
